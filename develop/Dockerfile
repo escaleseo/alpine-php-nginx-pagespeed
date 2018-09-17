@@ -6,7 +6,7 @@ RUN apk add --no-cache \
     zlib-dev \
     libpng-dev \
     python2 \
-    py2-pip
+    py2-pip \
     gnupg \
     nodejs \
     nodejs-npm \
