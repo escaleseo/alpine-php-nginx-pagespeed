@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+env:
+  global:
+    - secure: "cRSBQF3RzbowepavoYi3OihWLzWUcBNPfNPjumOFfmMfLBk45dngYNwC1pLtAfaiC0BkJ7SV7x6o2oSoCQ7wgjGhwxhDko7TGjF2aUR5xBx5iC7SrrIEagCTnxibfr9Pfcrc4k+ocJ6PNPaFH8AxxKGfKoZQKhIIi4d2ysfuFFAesBFMVCDjrlJ1g7nPatMBtDvocMkXxElLYqnfnhzrjfDqrclLqkcSaErDe00soRdsIHOZswfjestdSEHdXYFnkUtxqiqBuj+6Q2DtRzdSbNe6/AOmSze4VW52cLVNUfU/tR1Q4OSZYs+9jg4aYzNhfZlmo5USBk6CnHGJMuZwVlKvpyPNw6cgAJvQkrk14SFFNx+9EVZKbhYYt9FKYj7InhZXcUlIJkg96MiehhziT9qhdH+eVpEaYDs4VoEZS4hUt+294pTrll8pImFvLxWMlMua2rAy5lbvMC7EJIYWX/1C+3fTmFDzhAJ7pIxoEqfGEfmEjYma5KXqK+0XUsKDT42H32r9wKSQIkIaqO4Dy0aT3LPYH643RXajmwL8PekLVNv+3QFpEnqQc7iQdNDUBG0WRLUuTmzZmaDQCDEawtxZvgbUPIOhdHHAz2rVE1vyyzzcGS2E9e/saH8fmuPl8OeD02eebwrldKWU3x8AQUeB2WoH87vMDc4fXruv1ss="
+
+  matrix:
+    - FLAVOR=builder
+    - FLAVOR=light
+
+install:
+  - cd ${FLAVOR} && docker build -t alpine-php-nginx-pagespeed:${FLAVOR} .
+  - docker run -d --name alpine-php-nginx-pagespeed-${FLAVOR} alpine-php-nginx-pagespeed:${FLAVOR}
+
+script:
+  - docker ps | grep -q alpine-php-nginx-pagespeed-${FLAVOR}
+
+deploy:
+  - provider: script
+    script: ".travis/deploy.sh ${FLAVOR}"
+    on:
+      branch: master
