@@ -4,8 +4,8 @@ This docker image has PHP7, PHP-FPM and Pagespeed enabled Nginx
 
 # Supported tags and respective `Dockerfile` links
 
--	[`builder`, `latest` (*builder/Dockerfile*)](builder/Dockerfile)
--	[`light` (*light/Dockerfile*)](light/Dockerfile)
+-	[`builder`, `latest` (*builder/Dockerfile*)](https://github.com/escaleseo/alpine-php-nginx-pagespeed/blob/development/builder/Dockerfile)
+-	[`light` (*light/Dockerfile*)](https://github.com/escaleseo/alpine-php-nginx-pagespeed/blob/development/light/Dockerfile)
 
 # The difference between tags
 
