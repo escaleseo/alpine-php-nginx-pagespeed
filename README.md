@@ -5,7 +5,7 @@ This docker image has PHP7, PHP-FPM and Pagespeed enabled Nginx
 # Supported tags and respective `Dockerfile` links
 
 -	[`builder`, `latest` (*builder/Dockerfile*)](builder/Dockerfile)
--	[`light`, (*light/Dockerfile*)](light/Dockerfile)
+-	[`light` (*light/Dockerfile*)](light/Dockerfile)
 
 # The difference between tags
 
