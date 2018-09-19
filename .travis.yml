@@ -4,21 +4,25 @@ services:
 
 env:
   global:
-    - secure: "cRSBQF3RzbowepavoYi3OihWLzWUcBNPfNPjumOFfmMfLBk45dngYNwC1pLtAfaiC0BkJ7SV7x6o2oSoCQ7wgjGhwxhDko7TGjF2aUR5xBx5iC7SrrIEagCTnxibfr9Pfcrc4k+ocJ6PNPaFH8AxxKGfKoZQKhIIi4d2ysfuFFAesBFMVCDjrlJ1g7nPatMBtDvocMkXxElLYqnfnhzrjfDqrclLqkcSaErDe00soRdsIHOZswfjestdSEHdXYFnkUtxqiqBuj+6Q2DtRzdSbNe6/AOmSze4VW52cLVNUfU/tR1Q4OSZYs+9jg4aYzNhfZlmo5USBk6CnHGJMuZwVlKvpyPNw6cgAJvQkrk14SFFNx+9EVZKbhYYt9FKYj7InhZXcUlIJkg96MiehhziT9qhdH+eVpEaYDs4VoEZS4hUt+294pTrll8pImFvLxWMlMua2rAy5lbvMC7EJIYWX/1C+3fTmFDzhAJ7pIxoEqfGEfmEjYma5KXqK+0XUsKDT42H32r9wKSQIkIaqO4Dy0aT3LPYH643RXajmwL8PekLVNv+3QFpEnqQc7iQdNDUBG0WRLUuTmzZmaDQCDEawtxZvgbUPIOhdHHAz2rVE1vyyzzcGS2E9e/saH8fmuPl8OeD02eebwrldKWU3x8AQUeB2WoH87vMDc4fXruv1ss="
+    - secure: "abdII5nMrzWLHdnAXGo0DcK40nQuQcgqEfiXnM78rqKc2gd+WAHTinozzVbFV3iXJ0uhbw8OsrDQCQGsMDgTIQmlutoczvdkRfXNVss03IfMLI0k1BImCeXR2ii3yldX1ykmAhUsg6AZ3Gy+ACR8cSDvh60TkF/oVO5uNyH05GQm8ejlvisYgKAZzXs/f2f11MGwqQ0RsUlRAlZVfTivRRV/5zGDO/No6z9XkK/THiqUB0atVG8oaFgXg4zBuU2oawBbkvgkVZujCeaCbQOA/0lEPi6b8abmLQnVHjAcJmS2TMGV9IO5GsQZUp0T5QTRh3zQr3FaVyamDZ47Q/uvF9zZDGGpfopH/lKo8LfWaeS55Jkxri4hDNPzwRFdU6xEIhh1yHu05e65NvV6QSAuLTTJXIB8XAEVM2CopWSAe2hCnpB5WyaZ5mdZ2l7u8ZciOwJOgt/udGo3q010xZFTsF6OG2PImC+FGhOxUAebA+nwf2tG6unUaVM/HKDW9t1yOs8TVTUo1Voo947NhAHgnPNNQxlR6jy153S6th0T3FNB9IDtL7OwMLXYVwk6wVrnpuWur60xRsHf2epi/V823MQQnEi3kga9byf5ta70pqbQ4vl+LWwU/k4mk0930g8+BS1XKz55wa2aGP7KGNKMicMEbsEnPez03XU9Am5mt4o="
 
   matrix:
     - FLAVOR=builder
     - FLAVOR=light
 
 install:
+  - export CURRENT_PATH=$(pwd)
   - cd ${FLAVOR} && docker build -t alpine-php-nginx-pagespeed:${FLAVOR} .
   - docker run -d --name alpine-php-nginx-pagespeed-${FLAVOR} alpine-php-nginx-pagespeed:${FLAVOR}
 
 script:
   - docker ps | grep -q alpine-php-nginx-pagespeed-${FLAVOR}
 
+after_success:
+  - cd $CURRENT_PATH
+
 deploy:
-  - provider: script
-    script: ".travis/deploy.sh ${FLAVOR}"
-    on:
-      branch: master
+  provider: script
+  script: ".travis/deploy.sh ${FLAVOR}"
+  on:
+    branch: master
