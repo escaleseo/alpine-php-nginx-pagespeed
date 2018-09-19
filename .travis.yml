@@ -20,9 +20,3 @@ script:
 
 after_success:
   - cd $CURRENT_PATH
-
-deploy:
-  provider: script
-  script: ".travis/deploy.sh ${FLAVOR}"
-  on:
-    branch: master
