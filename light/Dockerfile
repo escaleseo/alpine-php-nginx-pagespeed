@@ -46,8 +46,7 @@ RUN mkdir /tmp/newrelic \
     && cd newrelic-php5* \
     && cp ./agent/x64/newrelic-20170718.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/newrelic.so \
     && cp ./daemon/newrelic-daemon.x64 /usr/bin/newrelic-daemon \
-    && cp ./scripts/newrelic.ini.template /scripts/newrelic.ini \
-    chmod +x /scripts/*.sh
+    && chmod +x /scripts/*.sh
 
 RUN pip install supervisor
 
