@@ -1,6 +1,6 @@
 FROM pagespeed/nginx-pagespeed as pagespeed
-RUN addgroup -g 1000 -S www-data \
- && adduser -u 1000 -D -S -G www-data www-data
+RUN  addgroup -S nginx \
+	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx 
 
 FROM php:7.2-fpm-alpine3.8
 
