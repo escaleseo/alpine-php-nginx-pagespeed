@@ -1,6 +1,6 @@
 FROM pagespeed/nginx-pagespeed as pagespeed
 
-FROM php:7.2-fpm-alpine
+FROM php:7.2-fpm-alpine3.8
 
 RUN apk add --no-cache \
     zlib-dev \
