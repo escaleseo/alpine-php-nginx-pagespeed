@@ -1,4 +1,6 @@
 FROM pagespeed/nginx-pagespeed as pagespeed
+RUN addgroup -g 1000 -S www-data \
+ && adduser -u 1000 -D -S -G www-data www-data
 
 FROM php:7.2-fpm-alpine3.8
 
@@ -48,7 +50,6 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php \
     && chmod 755 /usr/local/bin/composer
 
 RUN pip install supervisor
-RUN addgroup -g 1000 -S nginx \
-  && adduser -u 1000 -D -S -G nginx nginx
+
 
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
