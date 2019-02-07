@@ -48,5 +48,7 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php \
     && chmod 755 /usr/local/bin/composer
 
 RUN pip install supervisor
+RUN addgroup -g 1000 -S nginx \
+  && adduser -u 1000 -D -S -G nginx nginx
 
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
