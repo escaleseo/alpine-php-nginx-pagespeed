@@ -1,6 +1,6 @@
 FROM pagespeed/nginx-pagespeed as pagespeed
 
-FROM php:7.2-fpm-alpine
+FROM php:7.2-fpm-alpine3.8
 
 RUN apk add --no-cache \
     zlib-dev \
@@ -42,11 +42,15 @@ RUN apk --no-cache upgrade && \
 RUN install -g www-data -o www-data -d /var/cache/ngx_pagespeed && \
     mkdir -p /var/cache/nginx/{client_temp,fastcgi_temp,proxy_temp} && \
     mkdir -p /var/log/nginx
+    
+RUN  addgroup -S nginx \
+	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx 
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && chmod 755 /usr/local/bin/composer
 
 RUN pip install supervisor
+
 
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
